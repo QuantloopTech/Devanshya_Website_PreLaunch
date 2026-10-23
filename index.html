@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Devanshya — देव का अंश</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:image" content="logo.png">
+<meta name="description" content="Find temples, verified Pandits and astrologers near you. Devanshya app coming soon.">
+<meta name="theme-color" content="#F7F5F2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Mukta:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F7F5F2; --ink:#241D1A; --muted:#64626E; --line:#E7E4DF;
+  --action:#D9B26A; --actionDeep:#C99A45; --actionInk:#8F6420; --actionTint:#F6EBD6;
+  --saffron:#F4A340; --success:#2F7A4F; --successTint:#E3F2E8; --info:#3B57A8; --infoTint:#E6ECFA;
+  --btn:linear-gradient(135deg,#EBCD8F,#CFA14E);
+  --shadow:0 1px 2px rgba(36,29,26,.04),0 10px 30px rgba(36,29,26,.07);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',system-ui,-apple-system,Segoe UI,sans-serif;background:var(--cream);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+h1,h2,h3{font-weight:600;letter-spacing:-.025em;line-height:1.08}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--saffron)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:52px;padding:0 26px;border-radius:999px;background:var(--btn);color:var(--ink);font-weight:600;font-size:16px;border:1px solid rgba(201,154,69,.6);box-shadow:0 6px 18px rgba(201,154,69,.3);white-space:nowrap;transition:transform .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn.ghost{background:#fff;border-color:rgba(36,29,26,.08);box-shadow:var(--shadow)}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:999px;background:rgba(255,255,255,.82);border:1px solid #fff;font-size:13px;font-weight:600;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+
+/* Nav */
+nav{position:absolute;top:0;left:0;right:0;z-index:20}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:76px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo .mk{height:40px;width:auto;filter:drop-shadow(0 2px 10px rgba(0,0,0,.35))}
+.logo .wm{height:24px;width:auto;margin-top:3px;filter:drop-shadow(0 1px 8px rgba(0,0,0,.4))}
+.scene.brand .bmk{width:clamp(72px,9vw,108px);height:auto;margin:0 auto 18px;display:block;filter:drop-shadow(0 6px 30px rgba(232,32,42,.35))}
+.scene.brand .bwm{width:clamp(240px,40vw,520px);height:auto;margin:0 auto;display:block;filter:drop-shadow(0 2px 30px rgba(0,0,0,.5))}
+.flogo{height:30px;width:auto}
+
+/* Scroll-scrubbed film */
+.scrub{position:relative;height:600vh;background:#0b0705}
+@media(max-width:760px){.scrub{height:480vh}}
+.stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+.stage video,.stage .poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.stage .poster{background:#0b0705 url('hero-poster.jpg') center/cover no-repeat;transition:opacity .6s}
+.stage.ready .poster{opacity:0}
+.stage::after{content:"";position:absolute;inset:0;pointer-events:none;background:
+  radial-gradient(120% 90% at 50% 45%,rgba(11,7,5,0) 40%,rgba(11,7,5,.55) 100%),
+  linear-gradient(180deg,rgba(11,7,5,.55) 0%,rgba(11,7,5,0) 22%,rgba(11,7,5,0) 55%,rgba(11,7,5,.78) 100%)}
+.scene{position:absolute;left:0;right:0;bottom:12vh;z-index:2;text-align:center;padding:0 24px;opacity:0;will-change:opacity,transform;pointer-events:none}
+.scene.top{bottom:auto;top:16vh}
+.scene h2{color:#FFF6E6;font-weight:300;font-size:clamp(30px,5.4vw,66px);letter-spacing:-.03em;line-height:1.08;text-shadow:0 2px 40px rgba(0,0,0,.45);max-width:16ch;margin:0 auto}
+.scene h2 b{font-weight:600;color:#F3D191}
+.scene .hi{font-family:'Mukta',sans-serif;font-weight:300;color:rgba(255,236,206,.88);font-size:clamp(17px,1.9vw,23px);margin-top:14px;letter-spacing:.01em;text-shadow:0 2px 24px rgba(0,0,0,.5)}
+.scene .eyebrow{display:inline-block;font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:rgba(243,209,145,.9);margin-bottom:16px}
+.scene.brand h2{font-weight:600;font-size:clamp(46px,9vw,120px);letter-spacing:-.04em;max-width:none}
+.scene.final{pointer-events:auto}
+.scene.final .soon{display:inline-flex;align-items:center;gap:10px;margin-top:22px;padding:9px 18px;border-radius:999px;background:rgba(255,246,230,.12);border:1px solid rgba(243,209,145,.45);color:#FFF6E6;font-weight:600;font-size:14px;letter-spacing:.04em;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.scene.final .stores{justify-content:center;margin-top:22px}
+.scene.final .store{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.hint{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);z-index:2;color:rgba(255,246,230,.75);font-size:11px;letter-spacing:.3em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:10px;transition:opacity .4s}
+.hint i{display:block;width:1px;height:42px;background:linear-gradient(rgba(243,209,145,0),rgba(243,209,145,.9));animation:drip 1.8s ease-in-out infinite}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+.progress{position:absolute;left:0;bottom:0;height:2px;width:100%;transform-origin:left;transform:scaleX(0);background:linear-gradient(90deg,#EBCD8F,#CFA14E);z-index:3}
+@media (prefers-reduced-motion:reduce){.hint i{animation:none}}
+
+/* Search */
+.search{margin:0 0 24px;background:#fff;border-radius:28px;padding:10px;box-shadow:0 14px 40px rgba(36,29,26,.08);max-width:680px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.tabs{display:flex;gap:4px;padding:4px;background:rgba(36,29,26,.05);border-radius:999px;margin-bottom:10px}
+.tab{flex:1;height:42px;border-radius:999px;font-weight:600;font-size:15px;color:var(--muted)}
+.tab[aria-selected=true]{background:#fff;color:var(--ink);box-shadow:0 1px 4px rgba(36,29,26,.1)}
+.sfields{display:flex;gap:8px}
+.field{flex:1;display:flex;align-items:center;gap:8px;height:54px;padding:0 16px;border-radius:16px;background:#FBF8F4;border:1px solid rgba(36,29,26,.06);min-width:0}
+.field input,.field select{border:0;background:transparent;font:inherit;font-size:16px;color:var(--ink);outline:0;width:100%;min-width:0}
+.field select{cursor:pointer;appearance:none}
+.field.city{flex:0 0 170px}
+@media(max-width:620px){.sfields{flex-wrap:wrap}.field.city{flex:1 1 100%}.sfields .btn{flex:1 1 100%}}
+
+/* Sections */
+section.block{padding:72px 0 0}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:24px}
+.head h2{font-size:clamp(28px,4vw,42px)}
+.sub{color:var(--muted);margin-top:6px}
+
+/* Category image cards */
+.cats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:860px){.cats{grid-template-columns:1fr}}
+.cat{position:relative;height:380px;border-radius:28px;overflow:hidden;text-align:left;box-shadow:var(--shadow);display:flex;align-items:flex-end;background:linear-gradient(135deg,#E9C98E,#C99A45)}
+@media(max-width:860px){.cat{height:260px}}
+.cat img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+.cat:hover img{transform:scale(1.05)}
+.cat::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(36,29,26,0) 40%,rgba(36,29,26,.78) 100%)}
+.cat .txt{position:relative;z-index:1;padding:24px;color:#fff;width:100%}
+.cat h3{font-size:26px}
+.cat p{opacity:.88;margin-top:4px;font-size:15px}
+.cat .go{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-weight:600;font-size:14px;color:#F3D191}
+
+/* Results */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.card{background:#fff;border-radius:22px;padding:16px;box-shadow:var(--shadow);text-align:left;width:100%;display:flex;gap:14px;align-items:center;transition:transform .15s}
+.card:hover{transform:translateY(-2px)}
+.av{width:56px;height:56px;border-radius:16px;flex:0 0 auto;display:grid;place-items:center;font-weight:600;font-size:17px;color:var(--ink)}
+.av.round{border-radius:50%}
+.card .name{font-weight:600;font-size:15px;line-height:1.3}
+.card .meta{font-size:13px;color:var(--muted);margin-top:2px}
+.tag{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600;margin-top:6px}
+.tag.ok{background:var(--successTint);color:var(--success)}
+.tag.v{background:var(--infoTint);color:var(--info)}
+.tag.g{background:var(--actionTint);color:var(--actionInk)}
+.empty{grid-column:1/-1;text-align:center;padding:40px 16px;color:var(--muted)}
+.more{display:flex;justify-content:center;margin-top:18px}
+.note{font-size:13px;color:var(--muted);margin-top:16px;text-align:center}
+
+/* App band */
+.app{margin-top:72px;border-radius:36px;overflow:hidden;position:relative;display:grid;grid-template-columns:1.1fr .9fr;min-height:360px;background:#F3E3CF}
+@media(max-width:860px){.app{grid-template-columns:1fr}}
+.app .copy{padding:clamp(28px,5vw,56px);position:relative;z-index:1;background:radial-gradient(60% 70% at 20% 30%,#F2B24E55,transparent 70%),radial-gradient(60% 70% at 80% 80%,#F7E3B0,transparent 70%),linear-gradient(135deg,#F3E3CF,#E9C98E)}
+.app h2{font-size:clamp(28px,4vw,42px);margin:16px 0 10px}
+.app .img{background:#c9a36a url('https://images.unsplash.com/photo-1763610642272-787bfeb8045c?auto=format&fit=crop&w=1200&q=80') center/cover;min-height:260px}
+.stores{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.store{display:flex;align-items:center;gap:10px;height:56px;padding:0 18px;border-radius:16px;background:var(--ink);color:#fff}
+.store small{display:block;font-size:10px;opacity:.75;letter-spacing:.05em;text-transform:uppercase}
+.store span{font-weight:600;font-size:15px;line-height:1.1}
+
+/* Sheet */
+.scrim{position:fixed;inset:0;background:rgba(36,29,26,.4);display:none;align-items:flex-end;justify-content:center;z-index:100}
+.scrim.open{display:flex}
+@media(min-width:640px){.scrim{align-items:center;padding:20px}}
+.sheet{background:#FFFBF5;width:100%;max-width:480px;border-radius:32px 32px 0 0;padding:22px;max-height:90vh;overflow:auto}
+@media(min-width:640px){.sheet{border-radius:32px}}
+.kv{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.kv:last-child{border:0}
+.kv span:first-child{color:var(--muted)}
+.kv span:last-child{text-align:right;font-weight:500}
+
+footer{padding:48px 0;color:var(--muted);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+:focus-visible{outline:2px solid var(--actionDeep);outline-offset:2px;border-radius:10px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="#" class="logo" aria-label="Devanshya home">
+      <img class="mk" src="logo-mark.png" alt="" width="40" height="40">
+      <img class="wm" src="logo-wordmark-white.png" alt="Devanshya" height="24">
+    </a>
+    <a href="#app" class="pill"><span class="dot"></span> App coming soon</a>
+  </div>
+</nav>
+
+<section class="scrub" id="film" aria-label="Devanshya">
+  <div class="stage" id="stage">
+    <div class="poster" aria-hidden="true"></div>
+    <video id="hv" muted playsinline preload="auto" aria-hidden="true" disablepictureinpicture></video>
+
+    <div class="scene" data-from="0" data-to=".15">
+      <span class="eyebrow">Devanshya</span>
+      <h2>It begins with <b>a single bead.</b></h2>
+      <p class="hi">एक मनका। एक नाम। एक साँस।</p>
+    </div>
+    <div class="scene" data-from=".19" data-to=".36">
+      <h2>Every prayer <b>finds its thread.</b></h2>
+      <p class="hi">हर प्रार्थना अपना धागा ढूँढ ही लेती है।</p>
+    </div>
+    <div class="scene top" data-from=".40" data-to=".57">
+      <h2>When devotion comes <b>full circle,</b> light finds its way in.</h2>
+      <p class="hi">जब भक्ति पूर्ण होती है, प्रकाश स्वयं आता है।</p>
+    </div>
+    <div class="scene" data-from=".61" data-to=".76">
+      <h2>In stillness, <b>the divine is near.</b></h2>
+      <p class="hi">मौन में ही ईश्वर का वास है।</p>
+    </div>
+    <div class="scene brand" data-from=".79" data-to=".90">
+      <img class="bmk" src="logo-mark.png" alt="">
+      <h2 style="margin:0"><img class="bwm" src="logo-wordmark-white.png" alt="Devanshya"></h2>
+      <p class="hi">देव का अंश — the divine, in every one of us.</p>
+    </div>
+    <div class="scene final" data-from=".93" data-to="9">
+      <span class="eyebrow">The Devanshya app</span>
+      <h2>Your sacred space, <b>coming soon.</b></h2>
+      <div class="stores">
+        <div class="store" aria-label="Google Play, coming soon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M4 2.8v18.4c0 .5.5.8.9.6l15.4-8.9c.5-.3.5-.9 0-1.2L4.9 2.2c-.4-.2-.9.1-.9.6Z"/></svg>
+          <div><small>Coming soon on</small><span>Google Play</span></div>
+        </div>
+        <div class="store" aria-label="App Store, coming soon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M16.4 12.6c0-2.4 2-3.5 2-3.6-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9-.7 0-1.8-.8-3-.8-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7c1.3 0 2-1.1 2.8-2.3.9-1.3 1.2-2.5 1.3-2.6-.1 0-2.5-.9-2.5-3.7ZM14.1 5.6c.6-.8 1.1-1.8 1-2.9-.9 0-2.1.6-2.7 1.4-.6.7-1.1 1.8-1 2.8 1 .1 2.1-.5 2.7-1.3Z"/></svg>
+          <div><small>Coming soon on</small><span>App Store</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hint" id="hint">Scroll<i></i></div>
+    <div class="progress" id="prog"></div>
+  </div>
+</section>
+
+<main class="wrap">
+  <!-- Categories -->
+  <section class="block">
+    <div class="head"><h2>What are you looking for?</h2></div>
+    <div class="cats">
+      <button class="cat" data-type="temple">
+        <img src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=900&q=80" alt="Temple" loading="lazy" onerror="this.remove()">
+        <div class="txt"><h3>Temples</h3><p>Timings, live aarti and darshan status.</p><span class="go">Find temples →</span></div>
+      </button>
+      <button class="cat" data-type="pandit">
+        <img src="https://images.unsplash.com/photo-1763610651463-4e7b3befbcc8?auto=format&fit=crop&w=900&q=80" alt="Pandit performing aarti" style="object-position:center 20%" loading="lazy" onerror="this.remove()">
+        <div class="txt"><h3>Pandits</h3><p>Verified Pandits with clear dakshina.</p><span class="go">Find Pandits →</span></div>
+      </button>
+      <button class="cat" data-type="astro">
+        <img src="https://images.unsplash.com/photo-1729335511883-29eade10006b?auto=format&fit=crop&w=900&q=80" alt="Astrology" loading="lazy" onerror="this.remove()">
+        <div class="txt"><h3>Astrologers</h3><p>Chat or call, rates shown upfront.</p><span class="go">Find astrologers →</span></div>
+      </button>
+    </div>
+  </section>
+
+  <!-- Results -->
+  <section class="block" id="results-sec">
+    <div class="head">
+      <div><h2 id="resTitle">Temples in Ahmedabad</h2><p class="sub" id="resSub"></p></div>
+    </div>
+    <div class="grid" id="results" aria-live="polite"></div>
+    <div class="more"><button class="btn ghost" id="moreBtn" type="button">Show more</button></div>
+    <p class="note">Sample listings for preview. The full directory opens with the app.</p>
+  </section>
+
+  <!-- App -->
+  <section class="app" id="app">
+    <div class="copy">
+      <span class="pill"><span class="dot"></span> Coming soon</span>
+      <h2>The Devanshya app is on its way.</h2>
+      <p style="color:#3f3833;max-width:440px">Book pujas, watch live aarti and consult astrologers, right from your phone.</p>
+      <div class="stores">
+        <div class="store" aria-label="Google Play, coming soon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M4 2.8v18.4c0 .5.5.8.9.6l15.4-8.9c.5-.3.5-.9 0-1.2L4.9 2.2c-.4-.2-.9.1-.9.6Z"/></svg>
+          <div><small>Coming soon on</small><span>Google Play</span></div>
+        </div>
+        <div class="store" aria-label="App Store, coming soon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M16.4 12.6c0-2.4 2-3.5 2-3.6-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9-.7 0-1.8-.8-3-.8-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7c1.3 0 2-1.1 2.8-2.3.9-1.3 1.2-2.5 1.3-2.6-.1 0-2.5-.9-2.5-3.7ZM14.1 5.6c.6-.8 1.1-1.8 1-2.9-.9 0-2.1.6-2.7 1.4-.6.7-1.1 1.8-1 2.8 1 .1 2.1-.5 2.7-1.3Z"/></svg>
+          <div><small>Coming soon on</small><span>App Store</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="img" role="img" aria-label="Lit diyas"></div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span style="display:flex;align-items:center;gap:14px;flex-wrap:wrap"><img class="flogo" src="logo.png" alt="Devanshya"> A product of Quantloop Technologies Pvt. Ltd.</span>
+    <span>© <span id="yr"></span> Quantloop Technologies Pvt. Ltd.</span>
+  </div>
+</footer>
+
+<div class="scrim" id="scrim" role="dialog" aria-modal="true" aria-labelledby="dName"><div class="sheet" id="sheet"></div></div>
+
+<script>
+(function(){
+  // Sample data (fictional), replaced by the live directory at launch.
+  var CITIES=['Ahmedabad','Gandhinagar','Vadodara','Surat','Rajkot','Mumbai','Pune'];
+  var AREAS={Ahmedabad:['Navrangpura','Satellite','Maninagar','Vastrapur','Bopal','Paldi','Thaltej'],Gandhinagar:['Sector 21','Sector 7','Infocity'],Vadodara:['Alkapuri','Manjalpur','Karelibaug'],Surat:['Adajan','Vesu','Varachha'],Rajkot:['Kalawad Road','Raiya'],Mumbai:['Borivali','Ghatkopar','Dadar'],Pune:['Kothrud','Baner','Camp']};
+  var KINDS=[['Shree Mahadev Mandir','Shiva'],['Hanuman Dada Mandir','Hanuman'],['Ambe Mata Mandir','Durga'],['Radha Krishna Mandir','Krishna'],['Shri Ram Mandir','Ram'],['Siddhivinayak Mandir','Ganesh'],['Shani Dev Mandir','Shani'],['Sai Mandir','Sai Baba'],['Lakshmi Narayan Mandir','Vishnu']];
+  var FIRST=['Mahesh','Kavita','Rakesh','Nirmala','Harish','Sunita','Dinesh','Rekha','Prakash','Asha','Vinod','Geeta','Ashok','Usha','Kiran'];
+  var LAST=['Dave','Joshi','Pandya','Trivedi','Shukla','Bhatt','Vyas','Mehta','Upadhyay','Dwivedi','Mishra','Sharma'];
+  var PUJAS=['Rudrabhishek','Satyanarayan katha','Griha pravesh','Vivah sanskar','Navgraha shanti','Sundarkand path'];
+  var ASTRO=['Kundli','Marriage matching','Career','Vastu','Muhurat'];
+  var LANGS=[['Hindi','Gujarati'],['Hindi','Sanskrit'],['Hindi','English'],['Gujarati','English']];
+  var TINT=['linear-gradient(135deg,#F3E3CF,#E9C98E)','linear-gradient(135deg,#F6E6DD,#E8B9A0)','linear-gradient(135deg,#EFE8FA,#D7CBF3)','linear-gradient(135deg,#E9F0FB,#C9DAF6)','linear-gradient(135deg,#E5EEDF,#B9CFAE)'];
+  function rand(n){var x=Math.sin(n*9301+49297)*233280;return x-Math.floor(x);}
+
+  var all=[],n=0;
+  CITIES.forEach(function(city,ci){AREAS[city].forEach(function(area,ai){for(var k=0;k<(ci===0?3:2);k++){
+    var ki=(ci*7+ai*3+k*5)%KINDS.length; while(all.some(function(t){return t.name===KINDS[ki][0]+', '+area;})) ki=(ki+1)%KINDS.length;
+    var r=rand(++n);
+    all.push({type:'temple',id:'t'+n,name:KINDS[ki][0]+', '+area,deity:KINDS[ki][1],city:city,area:area,verified:rand(n+777)>0.3,live:rand(n+1555)>0.82,km:Math.round((0.6+r*12)*10)/10,
+      timings:[['Mangla aarti','5:30 AM'],['Darshan','6:00 AM – 12:30 PM'],['Darshan','4:00 PM – 9:00 PM'],['Sandhya aarti','7:15 PM']]});
+  }});});
+  for(var i=1;i<=60;i++){
+    var r=rand(i+500),city=CITIES[i%CITIES.length],isA=i%3===0,idx=(i*7)%180,pool=isA?ASTRO:PUJAS;
+    var o={type:isA?'astro':'pandit',id:'p'+i,name:(isA?'Acharya ':'Pt. ')+FIRST[idx%FIRST.length]+' '+LAST[Math.floor(idx/FIRST.length)%LAST.length],city:city,area:AREAS[city][i%AREAS[city].length],
+      years:4+Math.round(r*26),rating:(4.3+rand(i+9)*0.6).toFixed(1),langs:LANGS[i%LANGS.length],spec:[pool[i%pool.length],pool[(i*3+1)%pool.length]].filter(function(v,j,a){return a.indexOf(v)===j;}),verified:r>0.2};
+    if(isA){o.rate=[15,20,25,30,40][i%5];o.online=rand(i+21)>0.5;}else{o.from=[1101,1501,2101,2501,3100][i%5];}
+    all.push(o);
+  }
+
+  var LABEL={temple:'Temples',pandit:'Pandits',astro:'Astrologers'};
+  var PH={temple:'Shiva, Hanuman…',pandit:'Katha, Rudrabhishek…',astro:'Kundli, career…'};
+  var state={type:'temple',q:'',city:'Ahmedabad',limit:6};
+  var $=function(id){return document.getElementById(id);};
+  var esc=function(s){return String(s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});};
+  var inr=function(v){return '₹'+v.toLocaleString('en-IN');};
+  var ini=function(s){return s.replace(/^(Pt\.|Acharya)\s/,'').split(' ').map(function(w){return w[0];}).join('').slice(0,2);};
+  var tint=function(id){return TINT[id.replace(/\D/g,'')%TINT.length];};
+
+  $('yr').textContent=new Date().getFullYear();
+
+  function match(x){
+    if(x.type!==state.type) return false;
+    if(state.city&&x.city!==state.city) return false;
+    var q=state.q.toLowerCase().replace(/temples?|mandir/g,'').trim(); if(!q) return true;
+    var hay=[x.name,x.area,x.city,x.deity||'',(x.spec||[]).join(' ')].join(' ').toLowerCase();
+    return q.split(/\s+/).every(function(w){return hay.indexOf(w)>=0;});
+  }
+  var TEMPLE_ICON='<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21v-6l7-5 7 5v6M3 21h18M12 3v4M10 21v-3a2 2 0 0 1 4 0v3"/></svg>';
+  function card(x){
+    if(x.type==='temple') return '<button class="card" data-id="'+x.id+'"><div class="av" style="background:'+tint(x.id)+'">'+TEMPLE_ICON+'</div><div><div class="name">'+esc(x.name)+'</div><div class="meta">'+x.deity+' · '+x.km+' km</div>'+(x.live?'<span class="tag ok">● Live aarti</span>':x.verified?'<span class="tag v">Timings confirmed</span>':'<span class="tag g">Open today</span>')+'</div></button>';
+    return '<button class="card" data-id="'+x.id+'"><div class="av round" style="background:'+tint(x.id)+'">'+ini(x.name)+'</div><div><div class="name">'+esc(x.name)+'</div><div class="meta">★ '+x.rating+' · '+x.years+' yrs · '+x.spec[0]+'</div><span class="tag g">'+(x.type==='astro'?inr(x.rate)+'/min':'From '+inr(x.from))+'</span></div></button>';
+  }
+  function render(){
+    var list=all.filter(match).sort(function(a,b){return a.type==='temple'?a.km-b.km:b.rating-a.rating;});
+    $('resTitle').textContent=LABEL[state.type]+(state.city?' in '+state.city:'');
+    $('resSub').textContent=list.length+' found'+(state.q?' for “'+state.q+'”':'');
+    $('results').innerHTML=list.length?list.slice(0,state.limit).map(card).join(''):'<div class="empty">Nothing found. Try another city or a simpler word.</div>';
+    $('moreBtn').style.display=list.length>state.limit?'':'none';
+  }
+  function setType(t,scroll){
+    state.type=t;state.limit=6;
+    document.querySelectorAll('.tab').forEach(function(b){b.setAttribute('aria-selected',b.dataset.type===t);});
+    render();
+    if(scroll) $('results-sec').scrollIntoView({behavior:'smooth'});
+  }
+  document.querySelectorAll('.tab').forEach(function(b){b.addEventListener('click',function(){setType(b.dataset.type);});});
+  document.querySelectorAll('.cat').forEach(function(b){b.addEventListener('click',function(){setType(b.dataset.type,true);});});
+  $('moreBtn').addEventListener('click',function(){state.limit+=6;render();});
+
+  function kv(k,v){return '<div class="kv"><span>'+k+'</span><span>'+v+'</span></div>';}
+  function open(x){
+    var h='<div style="display:flex;gap:14px;align-items:center"><div class="av'+(x.type==='temple'?'':' round')+'" style="width:64px;height:64px;background:'+tint(x.id)+'">'+(x.type==='temple'?TEMPLE_ICON:ini(x.name))+'</div><div><h3 id="dName" style="font-size:21px">'+esc(x.name)+'</h3><p style="color:var(--muted);font-size:14px">'+esc(x.area)+', '+x.city+'</p></div></div><div style="margin-top:14px">';
+    if(x.type==='temple') h+=x.timings.map(function(t){return kv(t[0],t[1]);}).join('');
+    else h+=kv(x.type==='astro'?'Topics':'Pujas',x.spec.join(', '))+kv('Languages',x.langs.join(', '))+kv('Experience',x.years+' years · ★ '+x.rating)+(x.type==='astro'?kv('Rate',inr(x.rate)+'/min'):kv('Dakshina','From '+inr(x.from)));
+    h+='</div><div style="display:grid;gap:10px;margin-top:18px"><a href="#app" class="btn" data-close>Book in the app · coming soon</a><button class="btn ghost" type="button" data-close>Close</button></div><p class="note">Sample listing for preview.</p>';
+    $('sheet').innerHTML=h;$('scrim').classList.add('open');document.body.style.overflow='hidden';
+  }
+  function close(){$('scrim').classList.remove('open');document.body.style.overflow='';}
+  $('results').addEventListener('click',function(e){var c=e.target.closest('.card');if(!c)return;for(var i=0;i<all.length;i++)if(all[i].id===c.dataset.id)return open(all[i]);});
+  $('scrim').addEventListener('click',function(e){if(e.target===$('scrim')||e.target.closest('[data-close]'))close();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+  setType('temple');
+})();
+</script>
+<script>
+/* Scroll-scrubbed hero: the film follows the scroll; each line fades in for its part of the story. */
+(function(){
+  var sec=document.getElementById('film'), stage=document.getElementById('stage'), v=document.getElementById('hv');
+  var hint=document.getElementById('hint'), prog=document.getElementById('prog');
+  var scenes=[].slice.call(document.querySelectorAll('.scene')).map(function(el){return {el:el,a:+el.dataset.from,b:+el.dataset.to};});
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var dur=0,cur=0,FADE=.035;
+  v.src=window.innerWidth<800?'hero-854.mp4':'hero-1280.mp4';
+  v.addEventListener('loadedmetadata',function(){dur=v.duration||12;});
+  v.addEventListener('loadeddata',function(){stage.classList.add('ready');});
+  // iOS needs one play() from a gesture before seeking paints frames.
+  var unlocked=false;function unlock(){if(unlocked)return;unlocked=true;var p=v.play();if(p&&p.then)p.then(function(){v.pause();}).catch(function(){});}
+  window.addEventListener('touchstart',unlock,{passive:true,once:true});
+  function progress(){var total=sec.offsetHeight-window.innerHeight;if(total<=0)return 0;return Math.min(1,Math.max(0,-sec.getBoundingClientRect().top/total));}
+  function vis(p,a,b){if(p<a||p>b)return 0;return Math.min(1,(p-a)/FADE,(b-p)/FADE);}
+  function frame(){
+    var p=progress();
+    if(dur){var t=p*(dur-.05);cur+=(t-cur)*(reduce?1:.14);if(!v.seeking&&Math.abs(v.currentTime-cur)>.02){try{v.currentTime=cur;}catch(e){}}}
+    for(var i=0;i<scenes.length;i++){var s=scenes[i],o=vis(p,s.a,s.b);s.el.style.opacity=o;s.el.style.transform=reduce?'none':'translateY('+((1-o)*(p<s.a+FADE?18:-18))+'px)';s.el.style.visibility=o>0?'visible':'hidden';}
+    hint.style.opacity=p<.03?1:0;prog.style.transform='scaleX('+p+')';
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
